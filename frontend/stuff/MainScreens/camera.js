@@ -38,7 +38,6 @@ takeVideo = async () => {
       onPictureSaved: this.onPictureSaved,
       maxDuration: 12
     })
-    console.log(video.uri)
     postStore.dispatch({type:"uri", payload: video.uri})
     this.props.navigation.navigate('Preview')
 
@@ -54,7 +53,6 @@ async pickVideos() {
   allowsEditing: true,
   mediaTypes: 'Videos'
 })
-console.log(result)
 if(result.cancelled === false){
   if(result.duration >= 12000) {
     this.props.navigation.navigate('VidTooLong')

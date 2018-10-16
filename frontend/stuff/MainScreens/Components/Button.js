@@ -37,7 +37,6 @@ export default class Button extends Component {
       formData.append('selectedFiles', {uri:postData.thumbnail, type:'image/png', name:'thumb' });
       axios.post('http://Miless-MacBook-Pro.local:3002/videos', formData)
            .then((result) => {
-            // console.log(result)
           });
        }
      }

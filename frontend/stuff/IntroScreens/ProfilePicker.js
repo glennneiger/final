@@ -33,7 +33,7 @@ close() {
   // console.log(String.fromCodePoint(strooth));
 }
 finishRegister() {
-  const emoji = parseInt(emojiUnicode(String(this.state.emoji)), 16) //turns the emoji into unicode, then the unicode to a codepoint
+  let emoji = parseInt(emojiUnicode(String(this.state.emoji)), 16) //turns the emoji into unicode, then the unicode to a codepoint
   var credentialsSoFar = introStore.getState()
   credentialsSoFar.emoji = emoji
   this.setState({modalVisible: !this.state.modalVisible})

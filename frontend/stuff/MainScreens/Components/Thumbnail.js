@@ -15,7 +15,6 @@ export default class Thumbnail extends Component {
     this.props.navigation.navigate("VideoContainer")
   }
   render() {
-    console.log(this.props.videoID)
     return (
       <TouchableOpacity
         style={[styles.goodShadow, styles.thumbnailContainer]}

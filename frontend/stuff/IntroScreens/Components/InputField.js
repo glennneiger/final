@@ -17,7 +17,6 @@ export default class InputField extends Component {
   }
 
 changeGood(textType, res) {
-  console.log(res)
   if(res) {
     okStore.dispatch({type:"ok", payload: true})
   } else {
@@ -32,10 +31,6 @@ changeGood(textType, res) {
       loginStore.dispatch({type: 'updateButton', payload: false})
     }
   }
-  example = debounce((text) => {
-console.log(text)
-}, 500)
-
   async updateText(text, textType, notRegister) {
     if(notRegister){
       if(textType === 'Username') {

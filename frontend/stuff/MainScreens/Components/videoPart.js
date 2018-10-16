@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import {View, Text, Image, TouchableOpacity, StatusBar} from 'react-native';
 import {Video, LinearGradient} from 'expo';
-import {vidStore, queueStore} from '../../reduxStuff.js';
+import {vidStore, commentStore} from '../../reduxStuff.js';
 import styles from '../../styles.js';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 export default class VideoScreen extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      otherThingy: props.otherThingy
+      videoID: props.videoID,
     }
   }
   state = {
@@ -34,11 +34,12 @@ export default class VideoScreen extends Component {
     })
 }
   async componentWillMount() {
-    let video = await fetch('http://Miless-MacBook-Pro.local:2999/postDisplay', {
+    await fetch('http://Miless-MacBook-Pro.local:2999/postDisplay', {
       method: 'post',
-      body:JSON.stringify(this.state.otherThingy),
+      body:JSON.stringify(this.state.videoID),
     }).then(res=>res.json())
       .then(res=>this.setData(res))
+      commentStore.dispatch({type:'videoID', payload: this.state.videoID})
   }
   checkToggle() {
     if(this.state.toggled) {

@@ -289,6 +289,11 @@ export default styles = StyleSheet.create({
       borderBottomLeftRadius: 25,
       borderBottomRightRadius: 25
     },
+    commentChild: {
+      width: 80+'%',
+      borderBottomLeftRadius: 25,
+      borderBottomRightRadius: 25
+    },
     commentShadowCover: {
       width: 100+'%',
       height: 20,

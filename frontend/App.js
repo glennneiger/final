@@ -113,12 +113,8 @@ export default class App extends Component {
         }).then(res=>res.json())
           .then(res => this.changeNav(res))
     } catch(error) {
-      console.log(error)
+      (error)
     }
-    fetch('http://Miless-MacBook-Pro.local:2999/test/'+'?id='+loginData, {
-      method: 'post'    
-    }).then(res=>res.json())
-    .then(res => console.log(res))
   }
   componentWillMount() {
     this.displayData()

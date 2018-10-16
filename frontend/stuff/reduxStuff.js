@@ -40,6 +40,6 @@ const queueStoreReducer = function(state, action) {
 export const queueStore = createStore(queueStoreReducer);
 
 const commentStoreReducer = function(state, action) {
-  return action.payload;
+    return action.payload;
 };
 export const commentStore = createStore(commentStoreReducer);

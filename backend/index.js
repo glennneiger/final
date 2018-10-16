@@ -1,7 +1,6 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 var mysql = require('mysql')
-var http = require('http')
 var app = express()
 var con = mysql.createConnection({
   host: "localhost",
@@ -10,16 +9,17 @@ var con = mysql.createConnection({
   database: "test"
 })
 con.connect(function(err){
-  app.use(bodyParser.json());
-  require('./forms/userAdd')(app,con, http);
-  require('./forms/follow')(app,con, http);
-  app.use(bodyParser.text());
-  require('./forms/userCheck')(app, con, http);
-  require('./forms/userInfo')(app, con, http);
-  require('./forms/postDisplay')(app,con, http);
-  require('./forms/emailVal')(app, con, http);
-  require('./forms/userVal')(app, con, http);
-  require('./forms/userSearch')(app, con, http);
+require('./forms/comments')(app, con);
+app.use(bodyParser.json());
+require('./forms/userAdd')(app,con, http);
+require('./forms/follow')(app,con, http);
+app.use(bodyParser.text());
+require('./forms/userCheck')(app, con, http);
+require('./forms/userInfo')(app, con, http);
+require('./forms/postDisplay')(app,con, http);
+require('./forms/emailVal')(app, con, http);
+require('./forms/userVal')(app, con, http);
+require('./forms/userSearch')(app, con, http);
 })
 app.listen(2999, () => console.info('Application running on port 2999'))
 

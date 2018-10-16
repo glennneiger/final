@@ -11,7 +11,7 @@ export default class VideoContainer extends Component {
   renderCard = (card, index) => {
     return (
       <VideoScreen
-        otherThingy={card.videoID}
+        videoID={card.videoID}
         navigation={this.props.navigation}
         />
     )

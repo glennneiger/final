@@ -4,108 +4,43 @@ import styles from '../../styles.js';
 import BackButton from '../../IntroScreens/Components/BackButton'
 import Comment from '../Components/comment.js'
 import {commentStore} from '../../reduxStuff.js'
-const {height, width} = Dimensions.get('window');
+const {height} = Dimensions.get('window');
 export default class CommentScreen extends Component {
 
   state = {
     inputHeight: 0,
-    currentComment: -1,
-    commentData: [
-      {
-        user: 'Mileslow22',
-        emoji: '😀',
-        comment: "Dang, so pretty. I wish my comments " +
-        "looked good like other comments do",
-        number: '1',
-      },
-      {
-        user: 'Mileslow22',
-        emoji: '😀',
-        comment: "Dang, so pretty. I wish my comment " +
-        "looked good like other comments do",
-        number: '2',
-      },
-      {
-        user: 'Mileslow22',
-        emoji: '😀',
-        comment: "Dang, so pretty. I wish my comments " +
-        "looked good like other comments do",
-        number: '3',
-      },
-      {
-        user: 'Mileslow22',
-        emoji: '😀',
-        comment: "Dang, so pretty. I wish my comments " +
-        "looked good like other comments do",
-        number: '4',
-      },
-      {
-        user: 'Mileslow22',
-        emoji: '😀',
-        comment: "Dang, so pretty. I wish my comment " +
-        "looked good like other comments do",
-        number: '5',
-      },
-      {
-        user: 'Mileslow22',
-        emoji: '😀',
-        comment: "Dang, so pretty. I wish my comments " +
-        "looked good like other comments do",
-        number: '6',
-      },
-      {
-        user: 'Mileslow22',
-        emoji: '😀',
-        comment: "Dang, so pretty. I wish my comments " +
-        "looked good like other comments do",
-        number: '7',
-      },
-      {
-        user: 'Mileslow22',
-        emoji: '😀',
-        comment: "Dang, so pretty. I wish my comment " +
-        "looked good like other comments do",
-        number: '8',
-      },
-      {
-        user: 'Mileslow22',
-        emoji: '😀',
-        comment: "Dang, so pretty. I wish my comments " +
-        "looked good like other comments do",
-        number: '9',
-      },
-      {
-        user: 'Mileslow22',
-        emoji: '😀',
-        comment: "Dang, so pretty. I wish my comments " +
-        "looked good like other comments do",
-        number: '10',
-      },
-      {
-        user: 'Mileslow22',
-        emoji: '😀',
-        comment: "Dang, so pretty. I wish my comment " +
-        "looked good like other comments do",
-        number: '11',
-      },
-      {
-        user: 'Mileslow22',
-        emoji: '😀',
-        comment: "Dang, so pretty. I wish my comments " +
-        "looked good like other comments do",
-        number: '12',
-      },
-    ]
+    currentbody: -1,
   }
   checkComment(){
     let newComment = commentStore.getState();
     if(newComment !== -1 && newComment !== this.state.currentComment) {
-      this.setState({currentComment:newComment})
+      this.setState({currentbody:newComment})
       this.commentList.scrollToIndex({animated: false, index: newComment, viewOffset: height/2.9+2});
       this.input.focus();
     }
   }
-  componentDidMount() {
+  setCommentData = res => {
+    var newCommentData = res;
+    var replies = [];
+    var length = newCommentData.length;
+    for(var i = 0; i<length; i++) { 
+      if(newCommentData[i].parent!=null) {
+        replies.push(newCommentData[i]);
+        newCommentData[newCommentData[i].parent-1].children = replies;
+        newCommentData[newCommentData[i].parent-1].hasChildren = true;
+        newCommentData.splice(i, 1);
+      } else {
+        newCommentData[i].hasChildren = false;
+        newCommentData[i].number = i;
+      }
+    }
+    this.setState({commentData: newCommentData})
+  }
+  async componentDidMount() {
+    fetch('http://Miless-MacBook-Pro.local:2999/comments?id='+commentStore.getState(), {
+      method: 'post',
+    }).then(res=>res.json())
+    .then(res => this.setCommentData(res))
     commentStore.dispatch({type:'besnons', payload: -1})
     this.keyboardWillShowListener = Keyboard.addListener("keyboardWillShow",this.keyboardWillShow.bind(this));
     this.keyboardWillHideListener = Keyboard.addListener("keyboardWillHide",this.keyboardWillHide.bind(this));
@@ -119,7 +54,7 @@ export default class CommentScreen extends Component {
   }
   keyboardWillHide(e) {
     commentStore.dispatch({type:'besnons', payload: -1})
-    this.setState({inputHeight: 0, currentComment: -1})
+    this.setState({inputHeight: 0, currentbody: -1})
   }
   renderGoodButton = () => {
     return (
@@ -154,15 +89,17 @@ export default class CommentScreen extends Component {
           initialNumToRender={0}
           renderItem={({item})=>(
             <Comment
-              user={item.user}
+              user={item.username}
               emoji={item.emoji}
-              comment={item.comment}
+              comment={item.body}
               number={item.number}
+              hasChildren={item.hasChildren}
+              children={item.children}
               />
             )
           }
           keyboardDismissMode={'on-drag'}
-          keyExtractor={item => item.number}
+          keyExtractor={item => String(item.number)}
           />
 
         <View style={[styles.goodShadow,

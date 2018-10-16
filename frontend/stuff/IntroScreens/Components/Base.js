@@ -19,7 +19,6 @@ export const okStoreReducer = function(state, action) {
     newState.good = action.payload
     return newState
   }
-  console.log(action.payload)
 }
 export const okStore = createStore(okStoreReducer, '?')
 

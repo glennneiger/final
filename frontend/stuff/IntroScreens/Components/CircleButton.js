@@ -22,7 +22,6 @@ export default class CircleButton extends Component {
       if(data) {
       var oldData = loginStore.getState()
       var newData = {username: oldData.Username, password: oldData.Password}
-      console.log(newData)
       try { await fetch('http://Miless-MacBook-Pro.local:2999/userChecker', {
         method: 'post',
         body:JSON.stringify(newData),
@@ -54,7 +53,6 @@ render() {
   :
   require('../../../assets/White-X.png')
   if(this.props.loading === true) {
-    console.log('loading')
     return (
     <TouchableOpacity
         onPress={() => {this.goToLands(this.props.navigateTo,this.props.loggingIn,this.props.good)}}
