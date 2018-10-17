@@ -290,12 +290,11 @@ export default styles = StyleSheet.create({
       borderBottomRightRadius: 25
     },
     commentChild: {
-      width: 80+'%',
+      width: 90+'%',
       borderBottomLeftRadius: 25,
       borderBottomRightRadius: 25
     },
     commentShadowCover: {
-      width: 100+'%',
       height: 20,
       zIndex: 1,
       position: 'absolute',

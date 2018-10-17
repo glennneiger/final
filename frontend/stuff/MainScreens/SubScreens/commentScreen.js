@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {View, Text, FlatList, TouchableOpacity, TextInput, Dimensions, Keyboard, Image} from 'react-native'
+import {View, Text, FlatList, TouchableOpacity, TextInput, Dimensions, Keyboard, Image} from 'react-native';
 import styles from '../../styles.js';
-import BackButton from '../../IntroScreens/Components/BackButton'
-import Comment from '../Components/comment.js'
+import BackButton from '../../IntroScreens/Components/BackButton';
+import Comment from '../Components/commentComponents/comment.js';
 import {commentStore} from '../../reduxStuff.js'
 const {height} = Dimensions.get('window');
 export default class CommentScreen extends Component {
