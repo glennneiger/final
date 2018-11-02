@@ -9,11 +9,27 @@ var con = mysql.createConnection({
   database: "test"
 })
 con.connect(function(err){
-require('./forms/comments')(app, con);
 app.use(bodyParser.json());
+require('./forms/comments')(app, con);
 require('./forms/userAdd')(app,con, http);
 require('./forms/follow')(app,con, http);
+require('./forms/like')(app, con, bodyParser);
 app.use(bodyParser.text());
+app.post("/getEmoji", (request, response) => {
+    con.query("SELECT `emoji` FROM `users` WHERE `userID` = " + request.body, 
+    function(error, result) {
+        if(error) throw error;
+        response.send(result[0]);
+    }
+    )
+})
+app.post("/comments/check", (request,response) => {
+    con.query("SELECT COUNT(videoID) FROM `Comments` WHERE videoID = " + request.body,
+    function(error, result) {
+        if(error) throw error;
+       response.send(result[0])
+    })
+})
 require('./forms/userCheck')(app, con, http);
 require('./forms/userInfo')(app, con, http);
 require('./forms/postDisplay')(app,con, http);

@@ -295,7 +295,6 @@ export default styles = StyleSheet.create({
       borderBottomRightRadius: 25
     },
     commentShadowCover: {
-      height: 20,
       zIndex: 1,
       position: 'absolute',
       borderBottomLeftRadius: 20,
@@ -342,6 +341,8 @@ export default styles = StyleSheet.create({
   commentInput: {
     height: 35,
     borderRadius: 35
+  },
+  commentContentFixer: {
+    flex:9,
   }
-
   });

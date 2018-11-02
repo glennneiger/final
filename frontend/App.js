@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import { createStackNavigator, createBottomTabNavigator, createSwitchNavigator } from 'react-navigation';
-import {Intro, Login, Password, ProfilePicker, Username, FullName, Email} from './stuff/IntroScreens/index'
-import {Home, Trending, Profile, VideoCamera} from './stuff/MainScreens/index'
-import { VidTooLong, CaptionMaker, Preview, VideoContainer, CommentScreen} from './stuff/MainScreens/SubScreens/index'
-import { createStore } from 'redux'
+import {Intro, Login, Password, ProfilePicker, Username, FullName, Email} from './stuff/IntroScreens/index';
+import {Home, Trending, Profile, VideoCamera} from './stuff/MainScreens/index';
+import {Image} from 'react-native';
+import { VidTooLong, CaptionMaker, Preview, VideoContainer, CommentScreen} from './stuff/MainScreens/SubScreens/index';
+import { createStore } from 'redux';
 import {AsyncStorage} from 'react-native';
 
 export const introStoreReducer = function(state, action) {
@@ -57,11 +58,31 @@ const camScreens = createStackNavigator({
   headerMode: 'none',
 })
 const Tabs = createBottomTabNavigator({
-  profile: Profile,
+  profile: {screen: Profile},
   camera: camScreens,
   trending: Trending,
   home: Home,
-})
+}
+// ,{
+//   navigationOptions: ({ navigation }) => ({
+//     tabBarIcon: ({}) => {
+//       const { routeName } = navigation.state;
+//       let icon;
+//       if(routeName === 'profile') {
+//         icon = require('./assets/User.png')
+//       } else if(routeName ==='camera') {
+//         icon = require('./assets/Video-Camera.png')
+//       } else if(routeName ==='trending') {
+//         icon = require('./assets/Medal.png')
+//       } else if(routeName ==='home') {
+//         icon = require('./assets/TV.png')
+//       }
+//       return (<Image source={icon}/>)
+//     }
+//   })
+// }
+
+)
 const LoggedInNav = createStackNavigator({
   Main: Tabs,
   Comment: CommentScreen,

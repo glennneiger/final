@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, Image, TouchableOpacity, StatusBar} from 'react-native';
+import {View, Text, Image, TouchableOpacity, StatusBar, AsyncStorage} from 'react-native';
 import {Video, LinearGradient} from 'expo';
 import {vidStore, commentStore} from '../../reduxStuff.js';
 import styles from '../../styles.js';
@@ -33,14 +33,32 @@ export default class VideoScreen extends Component {
       videoSource: res.uri,
     })
 }
+setLike(res) {
+  console.log(res)
+  var liked = (res) ? true : false;
+  this.setState({
+    liked: liked
+  }) 
+}
   async componentWillMount() {
+    let userID = await AsyncStorage.getItem("userID");
     await fetch('http://Miless-MacBook-Pro.local:2999/postDisplay', {
       method: 'post',
       body:JSON.stringify(this.state.videoID),
     }).then(res=>res.json())
       .then(res=>this.setData(res))
       commentStore.dispatch({type:'videoID', payload: this.state.videoID})
-  }
+    await fetch('http://Miless-MacBook-Pro.local:2999/likeCheck'
+    + '?type=VideoLikes'
+    , {
+      method: 'post',
+      body:JSON.stringify({userID: JSON.parse(userID), id: this.state.videoID}),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    }).then(res=>res.json())
+    .then(res => {this.setLike(res)})
+  } 
   checkToggle() {
     if(this.state.toggled) {
       this.setState({
@@ -49,7 +67,6 @@ export default class VideoScreen extends Component {
       })
     }
   }
-
   handleTap() {  //if the user double taps the video pauses/plays, if user single taps it renders the bottom & top bars
     if(!this.state.toggled) {
       this.setState({
@@ -69,15 +86,33 @@ export default class VideoScreen extends Component {
         if(this.state.toggled) {
             this.setState({toggled: false})
           }
-
         }
   }
 
   saveToggle() { //saves the selected video to saved thingy
     this.setState({saved: !this.state.saved})
   }
-  likeToggle() { //likes the video
+  async likeToggle() { //likes the video
     this.setState({liked: !this.state.liked})
+    if(!this.state.liked) {
+      this.setState({
+        likeAmount: this.state.likeAmount+1
+      })
+    } else {
+      this.setState({
+        likeAmount: this.state.likeAmount-1
+      })
+    }
+    let userID = await AsyncStorage.getItem("userID");
+    let obj = {userID: JSON.parse(userID), videoID: this.state.videoID}
+    console.log(obj)
+    await fetch('http://Miless-MacBook-Pro.local:2999/like?video=true&liked='+this.state.liked, {
+      method: 'post',
+      body:JSON.stringify(obj),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
   }
   renderTopBar() { //user bar code
     return (

@@ -21,6 +21,7 @@
     "react-native-emoji-picker": "^0.2.2",
     "react-native-emoji-selector": "^0.1.6",
     "react-native-swipe-gestures": "^1.0.2",
+    "react-native-swipeout": "^2.3.6",
     "react-native-thumbnail": "^1.1.0",
     "react-native-thumbnail-video": "^0.1.1",
     "react-native-view-shot": "^2.4.0",
