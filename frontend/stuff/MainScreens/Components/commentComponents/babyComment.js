@@ -42,7 +42,6 @@ export class BabyComment extends Component {
       })
     }
     otherToggle = res => {
-      console.log(res)
       this.setState({liked: res})
     }
     
@@ -92,7 +91,13 @@ export class BabyComment extends Component {
     })
   }
     setReply = () => {
-            commentStore.dispatch({type: 'unnecessayr', payload: {item: this.props.number, height: this.state.height-40+this.props.amount*-50}})
+            commentStore.dispatch({type: 'fleebonejim',
+            payload: {
+              parent: this.props.parent,
+              item: this.props.parent,
+              height: ((this.props.number)*50)
+            }
+            })
         }
     render() {
         let like = (this.state.liked) ?  require('../../../../assets/Like.png') :  require('../../../../assets/NoLike.png')
@@ -109,7 +114,7 @@ export class BabyComment extends Component {
           <View style={[styles.row, {flex:7, bottom: 2, left: 4, height:100+'%'}, styles.justifyContentCenter]}>
             <TouchableOpacity
               onPress={()=>{this.setReply()}}
-              style={{right: 15, top: 8}}>
+              style={{right: 9, top: 8}}>
               <Text>Reply</Text>
             </TouchableOpacity>
               <TouchableOpacity
@@ -141,18 +146,25 @@ export class BabyComment extends Component {
     }
 }
 export default class BabyComments extends Component {
+  
     render() {
+      var i = 0;
         const childAmount = this.props.commentData.length
+        while(i<childAmount) {
+          this.props.commentData[i].number = i+1;
+          i++;
+        }
         return (
             <FlatList
           ref={ref => { this.commentList = ref; }}
           data={this.props.commentData}
           renderItem={({item})=>(
               <BabyComment
+              parent={this.props.parent}
               user={item.username}
               emoji={String.fromCodePoint(item.emoji)}
               comment={item.body}
-              number={item.parent}
+              number={item.number}
               amount={childAmount}
               commentID={item.commentID}
               likeAmount={item.likeAmount}

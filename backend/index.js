@@ -10,6 +10,7 @@ var con = mysql.createConnection({
 })
 con.connect(function(err){
 app.use(bodyParser.json());
+require('./forms/report')(app,con, http);
 require('./forms/comments')(app, con);
 require('./forms/userAdd')(app,con, http);
 require('./forms/follow')(app,con, http);

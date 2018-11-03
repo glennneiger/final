@@ -344,5 +344,14 @@ export default styles = StyleSheet.create({
   },
   commentContentFixer: {
     flex:9,
+  },
+  actionModalBody: {
+    backgroundColor: 'rgb(255,255,255)',
+    width: width*0.8,
+    height: width*0.8,
+  },
+  actionModal: {
+    flex: 1,
+    justifyContent: 'space-between'
   }
   });

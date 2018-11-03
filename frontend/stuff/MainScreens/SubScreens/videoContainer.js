@@ -29,7 +29,8 @@ export default class VideoContainer extends Component {
           cardVerticalMargin={0}
           cardHorizontalMargin={0}
           stackSize={2}
-            >
+          stackSeparation={0}
+        >
           </Swiper>
         </View>
       )

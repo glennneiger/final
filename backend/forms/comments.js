@@ -21,21 +21,26 @@ module.exports = (app, con) => {
             if (error) throw error;
             finishQuery(result[0].emoji)
             function finishQuery(emoji) {
+                console.log("INSERT INTO `Comments` (`videoID`, `body`, `parent`, `emoji`, `username`)"+
+                " VALUES ('"
+                + request.body.videoID + "', \"" + 
+                request.body.body +"\", " +
+                notNull(request.body.parent) +", '" +
+                emoji +"', '" +
+                request.body.username + "')");
                 con.query("INSERT INTO `Comments` (`videoID`, `body`, `parent`, `emoji`, `username`)"+
                 " VALUES ('"
                 + request.body.videoID + "', \"" + 
                 request.body.body +"\", " +
                 notNull(request.body.parent) +", '" +
                 emoji +"', '" +
-                request.body.username + "')", function(error, result) {
+                request.body.username + "')"
+                , function(error, result) {
                     if(error) throw error; 
                     console.log(result)
                 })
             }
         })
-    })
-    app.delete("/deleteComment", (request, response) => {
-        console.log('hello');
     })
 }
 //I have no idea how this works, like it doesn't make sense but whatevsies

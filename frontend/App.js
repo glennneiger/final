@@ -58,9 +58,9 @@ const camScreens = createStackNavigator({
   headerMode: 'none',
 })
 const Tabs = createBottomTabNavigator({
+  trending: Trending,
   profile: {screen: Profile},
   camera: camScreens,
-  trending: Trending,
   home: Home,
 }
 // ,{

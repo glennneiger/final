@@ -1,43 +1,64 @@
 import React, {Component} from 'react';
-import {View, Text, FlatList, TouchableOpacity, TextInput, Dimensions, Keyboard, Image, AsyncStorage} from 'react-native';
+import {View, Text, FlatList, TouchableOpacity, TextInput, Dimensions, Keyboard, Image, AsyncStorage, RefreshControl, Modal, TouchableWithoutFeedback} from 'react-native';
 import styles from '../../styles.js';
 import BackButton from '../../IntroScreens/Components/BackButton';
 import Comment from '../Components/commentComponents/comment.js';
 import {commentStore} from '../../reduxStuff.js'
 const {height} = Dimensions.get('window');
+const heightInc = height/3+10; 
+var commentCheckInterval;
 export default class CommentScreen extends Component {
   state = {
     inputHeight: 0,
     currentComment: -1,
     currentPost: commentStore.getState(),
     refreshing: false,
+    enabled: true,
+    modalVisible: false,
   }
   checkComment(){
     let newComment = commentStore.getState();
     if(typeof newComment == "object") {
-      this.setState({currentComment:newComment.item})
-      this.commentList.scrollToIndex({animated: true, index: newComment.item, viewOffset: height/3+50-newComment.height});
+      var viewOffset = heightInc+40-newComment.height;
+      this.setState({currentComment:newComment.item, enabled: false})
+      if(newComment.parent !== undefined) { //if current comment has parent
+        this.commentList.scrollToIndex({
+          animated: true,
+          index: newComment.parent,
+          viewOffset: heightInc-newComment.height
+        });
+        // console.log(newComment.item);
+      } else {
+        this.commentList.scrollToIndex({
+          animated: true,
+          index: newComment.item,
+          viewOffset: viewOffset
+        });
+      }
       this.input.focus();
     } else if (newComment !== -1 && newComment !== this.state.currentComment) {
-      this.setState({currentComment:newComment})
-      this.commentList.scrollToIndex({animated: true, index: newComment, viewOffset: height/3+10});
+      this.setState({currentComment:newComment, enabled: false})
+      this.commentList.scrollToIndex({animated: true, index: newComment, viewOffset: heightInc});
       this.input.focus();
+    } else {
+      this.setState({enabled: true})
     }
   }
   setCommentData = res => {
-    const length = res.length
-    this.setState({
-      length: length
+    this.setState({ //this is for the refresh
+      length: res.length
     })
     var newCommentData = res;
-    var replies = [];
+    var replies;
     var tempLength = newCommentData.length;
     var i = 0;
     while(i<tempLength) {
+      newCommentData[i].children =[];
       if(newCommentData[i].parent!=null) {
-        replies.push(newCommentData[i]);
-        newCommentData[newCommentData[i].parent-1].children = replies;
+        replies = (newCommentData[i]);
+        newCommentData[newCommentData[i].parent-1].children.push(replies);
         newCommentData[newCommentData[i].parent-1].hasChildren = true;
+        replies = null;
         newCommentData.splice(i, 1);
         tempLength--;
         i--;
@@ -47,12 +68,11 @@ export default class CommentScreen extends Component {
       }
       i++;
     }
-    console.log(newCommentData)
     this.setState({commentData: newCommentData});
   }
   addComment = async () => {
     if(this.state.text.length>1) {
-    let parent = (this.state.currentComment<0) ? null : this.state.currentComment;
+    let parent = (this.state.currentComment<0) ? null : this.state.currentComment+1;
     let betaUsername = await AsyncStorage.getItem('loginData');
     await fetch('http://Miless-MacBook-Pro.local:2999/addComment', {
           method: 'post',
@@ -79,15 +99,22 @@ export default class CommentScreen extends Component {
     }).then(res=>res.json())
     .then(res => this.setCommentData(res))
   }
+  toggleModal = () => {
+    console.log('hello');
+    this.setState({modalVisible: true})
+  }
+  showOptions = () => {
+    this.toggleModal();
+  }
   async componentDidMount() {
     commentStore.dispatch({type:'besnons', payload: -1})
     this.getStuff();
     this.keyboardWillShowListener = Keyboard.addListener("keyboardWillShow",this.keyboardWillShow.bind(this));
     this.keyboardWillHideListener = Keyboard.addListener("keyboardWillHide",this.keyboardWillHide.bind(this));
-    const commentCheckInterval = setInterval(()=>{this.checkComment()},144);
+    commentCheckInterval = setInterval(()=>{this.checkComment()},314);
   }
-  componentWillUnmount() {
-    clearInterval(commentCheckInterval)
+  async componentWillUnmount() {
+    clearInterval(commentCheckInterval);
   }
   keyboardWillShow(e) {
       this.setState({inputHeight: e.endCoordinates.height})
@@ -117,40 +144,62 @@ export default class CommentScreen extends Component {
   }
 
   onRefresh = async() => {
-    this.setState({
-      refreshing: true
-    })
-    await fetch('http://Miless-MacBook-Pro.local:2999/comments/check', {
-        method: 'post',
-        body: JSON.stringify(this.state.currentPost)
-      }).then(res=>res.json())
-      .then(res => this.editList(res)) 
-    this.setState({
-      refreshing: false
-    })
+      await fetch('http://Miless-MacBook-Pro.local:2999/comments/check', {
+          method: 'post',
+          body: JSON.stringify(this.state.currentPost)
+        }).then(res=>res.json())
+        .then(res => this.editList(res)) 
+      this.setState({
+        refreshing: false
+      })
   }
   render(){
+    const color = (this.state.enabled) ? 'rgb(30,30,30)' : 'rgb(255,255,255)'
     const comment = (this.state.currentComment !=-1) ? 'reply to Mileslow22' : 'Add a comment, bet'
     return (
       <View style={[styles.fullScreen, styles.whiteBackground]}>
+      {/* <Modal
+      animationType="slide"
+      transparent={false}
+      visible={this.state.modalVisible}>
+      <View style={[styles.actionModalBody]}>
+        <View style={styles.actionModal}>
+          <TouchableOpacity style={{flex:1}}>
+            <Text>Delete</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={{flex:1}}>
+            <Text>Report</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </Modal> */}
         <View style={[styles.whiteBackground, styles.goodShadow, styles.commentHeader, styles.row]}>
             <BackButton
               navigation={this.props.navigation}
-              prevScreen={'videoScreen'}
+              prevScreen={'VideoContainer'}
               size={36}
               />
           <View style={styles.container}><Text style={styles.commentHText}>Comments</Text>
         </View>
         </View>
         <FlatList
-          onRefresh={this.onRefresh}
-          refreshing={this.state.refreshing}
+          refreshControl={
+            <RefreshControl
+              onRefresh={this.onRefresh}
+              refreshing={this.state.refreshing}
+              tintColor={color}
+            />
+          }
           ref={ref => { this.commentList = ref; }}
           style={styles.offset}
           data={this.state.commentData}
           initialScrollIndex={0}
           initialNumToRender={0}
           renderItem={({item})=>(
+            <TouchableWithoutFeedback
+            onLongPress={this.showOptions}
+            >
+            <View>
             <Comment
               user={item.username}
               emoji={item.emoji}
@@ -164,6 +213,8 @@ export default class CommentScreen extends Component {
               videoID={this.state.currentPost}
               likeAmount={item.likeAmount}
               />
+              </View>
+              </TouchableWithoutFeedback>
             )
           }
           keyboardDismissMode={'on-drag'}
