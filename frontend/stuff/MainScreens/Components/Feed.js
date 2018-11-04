@@ -12,6 +12,7 @@ export default class Feed extends Component {
           <FeedHeader
           username={this.props.username}
           emoji={this.props.emoji}
+          self={this.props.self}
           />}
         data={this.props.videos}
         renderItem={({item}) =>

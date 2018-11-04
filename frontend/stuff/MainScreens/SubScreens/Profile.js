@@ -17,6 +17,7 @@ export default class ProfileScreen extends Component {
   render() {
     return (
         <Feed
+          self={this.props.self}
           username={this.props.username}
           emoji={this.props.emoji}
           videos = {this.props.videos}

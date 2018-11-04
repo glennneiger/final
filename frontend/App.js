@@ -1,9 +1,33 @@
 import React, {Component} from 'react';
-import { createStackNavigator, createBottomTabNavigator, createSwitchNavigator } from 'react-navigation';
-import {Intro, Login, Password, ProfilePicker, Username, FullName, Email} from './stuff/IntroScreens/index';
-import {Home, Trending, Profile, VideoCamera} from './stuff/MainScreens/index';
-import {Image} from 'react-native';
-import { VidTooLong, CaptionMaker, Preview, VideoContainer, CommentScreen} from './stuff/MainScreens/SubScreens/index';
+import {
+  createStackNavigator,
+  createBottomTabNavigator,
+  createSwitchNavigator
+} from 'react-navigation';
+import {
+  Intro,
+  Login,
+  Password,
+  ProfilePicker,
+  Username,
+  FullName,
+  Email
+} from './stuff/IntroScreens/index';
+import {
+  Home,
+  Trending,
+  Profile,
+  VideoCamera
+} from './stuff/MainScreens/index';
+import {
+  VidTooLong,
+  CaptionMaker,
+  Preview,
+  VideoContainer,
+  CommentScreen,
+  Search,
+  OtherProfile
+} from './stuff/MainScreens/SubScreens/index';
 import { createStore } from 'redux';
 import {AsyncStorage} from 'react-native';
 
@@ -57,8 +81,14 @@ const camScreens = createStackNavigator({
 },{
   headerMode: 'none',
 })
+const explore = createSwitchNavigator({
+  search: Search,
+  mainExplore: Trending, //supposed to be first
+},{
+  headerMode: 'none',
+})
 const Tabs = createBottomTabNavigator({
-  trending: Trending,
+  trending: explore,
   profile: {screen: Profile},
   camera: camScreens,
   home: Home,
@@ -84,6 +114,7 @@ const Tabs = createBottomTabNavigator({
 
 )
 const LoggedInNav = createStackNavigator({
+  OtherProfile: OtherProfile,
   Main: Tabs,
   Comment: CommentScreen,
   VideoContainer: VideoContainer,

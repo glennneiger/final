@@ -190,9 +190,6 @@ export default styles = StyleSheet.create({
       borderBottomRightRadius: 20,
       borderBottomLeftRadius: 20,
     },
-    column:{
-        flex: 1,
-    },
     userBarEmoji: {
       fontSize: 30,
        marginLeft:10,
@@ -353,5 +350,66 @@ export default styles = StyleSheet.create({
   actionModal: {
     flex: 1,
     justifyContent: 'space-between'
-  }
+  },
+  exploreBody: {
+    width: 100+'%',
+    height: height/10+5,
+    borderBottomLeftRadius:30,
+    borderBottomRightRadius:30,
+  },
+  searchBar: {
+    marginTop: 24,
+    alignSelf: 'center',
+    width: 93+'%',
+    height: 30,
+    flexDirection: 'row',
+    borderRadius: 15
+  },
+  searchBarInput: {
+    flex: 20,
+    color: 'rgb(145,145,145)'
+  },
+  searchBarFinal: {
+    marginTop: 24,
+    alignSelf: 'center',
+    width: 100+'%',
+    height: 30,
+    flexDirection: 'row',
+    borderRadius: 15
+  },
+  searchItem: {
+    width: 100+'%',
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    height: 45,
+    backgroundColor: 'rgb(255,255,255)',
+  },
+  linkUsername: {
+    fontWeight: 'bold',
+    fontSize: 14,
+    flex: 1,
+  },
+  linkFollowCount: {
+    fontWeight: '400',
+    fontSize: 14,
+    flex: 1,
+    color: 'rgb(145,145,145)'
+  },
+  linkShadowCover: {
+    width: 100+'%',
+    height: 30,
+    top: 20,
+    position: 'absolute',
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    backgroundColor: 'rgb(255, 255, 255)',
+  },
+  followBtn: {
+    width: 70,
+    height: 30,
+    borderRadius: 15,
+  },
+  followBtnTxt: {
+    
+  },
   });

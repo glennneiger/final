@@ -160,14 +160,14 @@ export default class BabyComments extends Component {
           data={this.props.commentData}
           renderItem={({item})=>(
               <BabyComment
-              parent={this.props.parent}
-              user={item.username}
-              emoji={String.fromCodePoint(item.emoji)}
-              comment={item.body}
-              number={item.number}
-              amount={childAmount}
-              commentID={item.commentID}
-              likeAmount={item.likeAmount}
+                parent={this.props.parent}
+                user={item.username}
+                emoji={String.fromCodePoint(item.emoji)}
+                comment={item.body}
+                number={item.number}
+                amount={childAmount}
+                commentID={item.commentID}
+                likeAmount={item.likeAmount}
               />
           )}
           keyExtractor={item => String(item.number)}

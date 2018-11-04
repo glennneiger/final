@@ -44,3 +44,7 @@ const commentStoreReducer = function(state, action) {
     return action.payload;
 }
 export const commentStore = createStore(commentStoreReducer);
+const currentUserReducer = function(state, action) {
+  return action.payload;
+}
+export const currentUserStore = createStore(currentUserReducer);
