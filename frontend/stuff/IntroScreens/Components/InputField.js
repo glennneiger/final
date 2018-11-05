@@ -42,7 +42,7 @@ changeGood(textType, res) {
         }).then(res=>res.json())
           .then(res => this.sendUp(res))
         } catch(error) {
-          console.log(error)
+          (error)
         }
       } else {
         loginStore.dispatch({type:textType, payload: text})
@@ -63,7 +63,7 @@ changeGood(textType, res) {
         }).then(res=>res.json())
           .then(res => this.changeGood(textType, res))
         } catch(error) {
-          console.log(error)
+          (error)
         }
       }
     }
@@ -76,7 +76,7 @@ changeGood(textType, res) {
         body:JSON.stringify(text),
       }).then(res=>res.json())
         .then(res => this.changeGood(textType, res))} catch(error) {
-          console.log(error)
+          (error)
         }
     }
   }

@@ -30,7 +30,7 @@ componentWillUnmount() {
 
 close() {
   this.setState({modalVisible: !this.state.modalVisible})
-  // console.log(String.fromCodePoint(strooth));
+  // (String.fromCodePoint(strooth));
 }
 finishRegister() {
   let emoji = parseInt(emojiUnicode(String(this.state.emoji)), 16) //turns the emoji into unicode, then the unicode to a codepoint

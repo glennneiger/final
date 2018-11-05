@@ -120,7 +120,7 @@ export default class Comment extends Component {
     let like = (this.state.liked) ?  require('../../../../assets/Like.png') :  require('../../../../assets/NoLike.png')
     let likeSizeBug = (this.state.liked) ? 22 : 30
     if(this.state.modalVisible){
-      console.log('hello')
+      ('hello')
     }
     return (
       <View>

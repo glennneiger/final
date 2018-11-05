@@ -1,10 +1,11 @@
-import VidTooLong from './VidTooLong'
-import CaptionMaker from './CaptionMaker'
-import Preview from './Preview'
-import VideoContainer from './videoContainer'
-import CommentScreen from './commentScreen'
-import Search from './search'
-import OtherProfile from './OtherProfile'
+import VidTooLong from "./VidTooLong";
+import CaptionMaker from "./CaptionMaker";
+import Preview from "./Preview";
+import VideoContainer from "./videoContainer";
+import CommentScreen from "./commentScreen";
+import Search from "./search";
+import OtherProfile from "./OtherProfile";
+import ProfileEdit from "./profileEdit";
 export {
   VidTooLong,
   CaptionMaker,
@@ -12,5 +13,6 @@ export {
   VideoContainer,
   CommentScreen,
   Search,
-  OtherProfile
-}
+  OtherProfile,
+  ProfileEdit
+};

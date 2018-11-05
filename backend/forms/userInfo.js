@@ -3,11 +3,8 @@ var valueB
 var valueU
 var valueN
 var update
-var column
 var sqlSelect
-var pageData
-var postsfind
-var userData= "SELECT `username`, `emoji` FROM users WHERE  userID= "
+var userData= "SELECT `username`, `emoji`, `followers` FROM users WHERE  userID= "
 var postSearch = "SELECT `caption`, `thumbnail`, `videoID` FROM Posts WHERE  userID = "
 app.post('/userDisplay', (request, response) => {
   sqlSelect = String(userData + ' "' + request.body + '"')

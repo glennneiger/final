@@ -27,7 +27,7 @@ export default class CommentScreen extends Component {
           index: newComment.parent,
           viewOffset: heightInc-newComment.height
         });
-        // console.log(newComment.item);
+        // (newComment.item);
       } else {
         this.commentList.scrollToIndex({
           animated: true,
@@ -100,7 +100,7 @@ export default class CommentScreen extends Component {
     .then(res => this.setCommentData(res))
   }
   toggleModal = () => {
-    console.log('hello');
+    ('hello');
     this.setState({modalVisible: true})
   }
   showOptions = () => {

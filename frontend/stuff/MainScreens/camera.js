@@ -31,7 +31,7 @@ addToBar(){
   })
 }
 takeVideo = async () => {
-  console.log('started recording')
+  ('started recording')
   barInt = setInterval(()=>{this.addToBar()}, 42)
     let video = await this.camera.recordAsync({
       quality: '720p',
@@ -46,7 +46,7 @@ stopVideo = () => {
   this.setState({bar: 0})
   clearInterval(barInt)
   this.camera.stopRecording()
-  console.log('stopped recording')
+  ('stopped recording')
 }
 async pickVideos() {
   let result = await ImagePicker.launchImageLibraryAsync({

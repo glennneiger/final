@@ -31,7 +31,7 @@ export default class CircleButton extends Component {
       }).then(res=>res.json())
         .then(res => this.checkIfLoggedIn(res, newData))}
         catch(error) {
-         console.log(error)
+         (error)
        }
     }
   } else {

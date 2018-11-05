@@ -405,11 +405,16 @@ export default styles = StyleSheet.create({
     backgroundColor: 'rgb(255, 255, 255)',
   },
   followBtn: {
-    width: 70,
+    width: 80,
     height: 30,
-    borderRadius: 15,
+    borderRadius: 20,
   },
   followBtnTxt: {
-    
+    fontSize: 14,
+    fontWeight: '600'
+  },
+  followerAmount: {
+    fontSize: 15,
+    color: 'rgb(80,80,80)'
   },
   });

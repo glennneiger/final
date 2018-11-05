@@ -1,26 +1,29 @@
-import React, {Component} from 'react';
-import {View} from 'react-native'
-import VideoScreen from '../Components/videoPart'
-import Swiper from 'react-native-deck-swiper'
-import {queueStore} from '../../reduxStuff'
+import React, { Component } from "react";
+import { View } from "react-native";
+import VideoScreen from "../Components/videoPart";
+import Swiper from "react-native-deck-swiper";
+import { queueStore } from "../../reduxStuff";
 export default class VideoContainer extends Component {
   state = {
     cards: queueStore.getState().data,
     cardIndex: queueStore.getState().current
+  };
+  goBack = () => {
+    this.props.navigation.navigate('profile')
   }
   renderCard = (card, index) => {
     return (
-      <VideoScreen
-        videoID={card.videoID}
-        navigation={this.props.navigation}
-        />
-    )
-  }
+      <VideoScreen videoID={card.videoID} navigation={this.props.navigation} />
+    );
+  };
   render() {
     return (
       <View>
         <Swiper
-          ref={ref => {this.swiper = ref}}
+          ref={ref => {
+            this.swiper = ref;
+          }}
+          onSwipedAll={()=>this.goBack()}
           showSecondCard={true}
           verticalSwipe={false}
           renderCard={this.renderCard}
@@ -30,9 +33,8 @@ export default class VideoContainer extends Component {
           cardHorizontalMargin={0}
           stackSize={2}
           stackSeparation={0}
-        >
-          </Swiper>
-        </View>
-      )
-    }
+        />
+      </View>
+    );
   }
+}
