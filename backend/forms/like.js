@@ -20,7 +20,7 @@ module.exports = (app, con) => {
           "INSERT INTO `VideoLikes` (`userID`, `VideoID`) VALUES (" +
           request.body.userID +
           ", " +
-          request.body.videoID + 
+          request.body.videoID +
           ")";
         likeAdd =
           "UPDATE `Posts` SET `likeAmount` = `likeAmount`+'1' WHERE `Posts`.`videoID` = " +

@@ -37,7 +37,7 @@ con.connect(function(err) {
   });
   require("./forms/userCheck")(app, con, http);
   require("./forms/userInfo")(app, con, http);
-  require("./forms/postDisplay")(app, con, http);
+  require("./forms/feeds/postDisplay")(app, con, http);
   require("./forms/emailVal")(app, con, http);
   require("./forms/userVal")(app, con, http);
   require("./forms/userSearch")(app, con, http);
