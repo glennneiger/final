@@ -5,9 +5,12 @@ import {
   Image,
   TouchableOpacity,
   StatusBar,
-  AsyncStorage
+  AsyncStorage,
+  Animated,
+  Dimensions
 } from "react-native";
-import { Video, LinearGradient } from "expo";
+const { height } = Dimensions.get("screen");
+import { Video } from "expo";
 import { vidStore, commentStore } from "../../reduxStuff.js";
 import styles from "../../styles.js";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
@@ -15,21 +18,19 @@ export default class VideoScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      videoID: props.videoID
+      videoID: props.videoID,
+      render: true,
+      videoSource: null,
+      likeAmount: null,
+      emoji: null,
+      username: null,
+      title: null,
+      liked: false,
+      saved: false,
+      paused: false,
+      toggled: false
     };
   }
-  state = {
-    render: true,
-    videoSource: null,
-    likeAmount: null,
-    emoji: null,
-    username: null,
-    title: null,
-    liked: false,
-    saved: false,
-    paused: false,
-    toggled: false
-  };
   setData(res) {
     //sets the state for all of the data to go in
     let videoData = vidStore.getState();
@@ -56,8 +57,7 @@ export default class VideoScreen extends Component {
       .then(res => res.json())
       .then(res => this.setData(res));
     commentStore.dispatch({ type: "videoID", payload: this.state.videoID });
-    var body = Object.assign({userID: userID, id: this.state.videoID});
-    console.log(body)
+    var body = Object.assign({ userID: userID, id: this.state.videoID });
   }
   checkToggle() {
     if (this.state.toggled) {
@@ -89,7 +89,6 @@ export default class VideoScreen extends Component {
       }
     }
   }
-
   saveToggle() {
     //saves the selected video to saved thingy
     this.setState({ saved: !this.state.saved });
@@ -107,7 +106,10 @@ export default class VideoScreen extends Component {
       });
     }
     let userID = await AsyncStorage.getItem("userID");
-    var obj = Object.assign({ userID: JSON.parse(userID), videoID: this.state.videoID });
+    var obj = Object.assign({
+      userID: JSON.parse(userID),
+      videoID: this.state.videoID
+    });
     await fetch(
       "http://Miless-MacBook-Pro.local:2999/like?video=true&liked=" +
         this.state.liked,
@@ -284,31 +286,32 @@ export default class VideoScreen extends Component {
       ? this.renderBottomBar(like, save, send, comment)
       : null;
     return (
-      <TouchableOpacity
-        activeOpacity={1}
-        onPress={() => {
-          this.handleTap();
-        }}
-      >
-        <StatusBar hidden />
-        <Video
-          style={styles.fullScreen}
-          ref={ref => {
-            this.video = ref;
+
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={() => {
+            this.handleTap();
           }}
-          source={{
-            uri:
-              "http://Miless-MacBook-Pro.local:5000/" +
-              this.state.videoSource +
-              ".mov"
-          }}
-          shouldPlay
-          isLooping
-        />
-        {top}
-        {bottom}
-        //bottom bar
-      </TouchableOpacity>
+        >
+          <StatusBar hidden />
+          <Video
+            style={styles.fullScreen}
+            ref={ref => {
+              this.video = ref;
+            }}
+            source={{
+              uri:
+                "http://Miless-MacBook-Pro.local:5000/" +
+                this.state.videoSource +
+                ".mov"
+            }}
+            shouldPlay
+            isLooping
+          />
+          {top}
+          {bottom}
+          //bottom bar
+        </TouchableOpacity>
     );
   }
 }

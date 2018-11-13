@@ -48,3 +48,11 @@ const currentUserReducer = function(state, action) {
   return action.payload;
 }
 export const currentUserStore = createStore(currentUserReducer);
+const modalStoreReducer = function(state, action) {
+  return action.payload;
+}
+export const modalStore = createStore(modalStoreReducer);
+const modalStoreOReducer = function(state, action) {
+  return action.payload;
+}
+export const modalStoreO = createStore(modalStoreOReducer);

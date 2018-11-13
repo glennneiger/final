@@ -123,14 +123,16 @@ export default styles = StyleSheet.create({
       zIndex: 20,
     },
     shutterButton: {
-      width: width * 0.22,
-      height: width * 0.22,
-      borderRadius: width * 0.11,
-      backgroundColor: '#ffffff',
-      marginTop: height*0.78
+      marginTop: height*0.82
     },
     icons: {
-      marginBottom: 15,
+      top: 13
+    },
+    stopSquare: {
+      backgroundColor: 'rgb(245, 0, 0)',
+      position: 'absolute',
+      top: 25,
+      left: 25
     },
     viewBar: {
       top: 20,

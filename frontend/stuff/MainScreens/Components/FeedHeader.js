@@ -27,7 +27,6 @@ export default class ProfileScreen extends Component {
     }
   }
   componentWillReceiveProps() {
-    console.log(this.props)
     this.setState({
       followerCount: this.props.followerCount,
       username: this.props.username,

@@ -4,7 +4,6 @@ import styles from '../../styles.js'
 import {introStore} from '../../../App'
 import {okStore} from './Base'
 import {loginStore} from '../Login'
-import debounce from "underscore"
 var reg
 export default class InputField extends Component {
   constructor() {

@@ -176,7 +176,7 @@ export default class CommentScreen extends Component {
         <View style={[styles.whiteBackground, styles.goodShadow, styles.commentHeader, styles.row]}>
             <BackButton
               navigation={this.props.navigation}
-              prevScreen={'VideoContainer'}
+              prevScreen={'Main'}
               size={36}
               />
           <View style={styles.container}><Text style={styles.commentHText}>Comments</Text>

@@ -23,7 +23,6 @@ import {
   VidTooLong,
   CaptionMaker,
   Preview,
-  VideoContainer,
   CommentScreen,
   Search,
   OtherProfile,
@@ -98,12 +97,12 @@ const explore = createSwitchNavigator(
 const self = createStackNavigator(
   {
     profile: Profile,
-    profileEdit: ProfileEdit,
+    profileEdit: ProfileEdit
   },
   {
     headerMode: "none"
   }
-)
+);
 const Tabs = createBottomTabNavigator(
   {
     self: self,
@@ -132,9 +131,9 @@ const Tabs = createBottomTabNavigator(
 );
 const LoggedInNav = createStackNavigator(
   {
+    camera: VideoCamera,
     Main: Tabs,
-    Comment: CommentScreen,
-    VideoContainer: VideoContainer
+    Comment: CommentScreen
   },
   {
     headerMode: "none"

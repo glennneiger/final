@@ -3,6 +3,7 @@ module.exports = (app,con, bodyParser) => {
     var find = "SELECT `uri`, `dateOfUpload`, `likeAmount`, `views`, `caption` FROM Posts WHERE  videoID = "
     var userID = request.body
     var query = find + userID
+    console.log(query)
     con.query(query, function (err, result) {
       if(err) {
         console.log(err)
